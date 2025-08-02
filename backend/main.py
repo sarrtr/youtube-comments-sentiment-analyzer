@@ -2,8 +2,17 @@ from fastapi import FastAPI, Query
 from youtube_parser import run
 import os
 import json
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 def root():
@@ -11,12 +20,19 @@ def root():
 
 @app.get("/analyze/")
 def analyze(url: str = Query(..., description="YouTube video URL")):
-    run(url)
+    result = run(url)
 
-    json_path = os.path.join("backend", "data", "comments.json")
-    if not os.path.exists(json_path):
-        return {"error": "Failed to analyze or save comments"}
+    if result is None:
+         return {"success": False, "message": "Invalid YouTube URL or no comments found."}
 
-    with open(json_path, encoding="utf-8") as f:
-        data = json.load(f)
-    return {"comments": data}
+    title = result.get("title", "Unknown Title")
+    comments = result.get("comments", [])
+
+    if not comments:
+        return {"success": False, "message": "No comments found."}
+
+    return {
+        "success": True,
+        "title": title,
+        "comments": comments
+    }

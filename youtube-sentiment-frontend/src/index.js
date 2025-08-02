@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App'; // Импорт корневого компонента
-import './index.css'; // Глобальные стили, включая Tailwind
+import App from './App'; 
+import './index.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

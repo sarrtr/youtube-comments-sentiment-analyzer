@@ -9,7 +9,7 @@ API_KEY = 'AIzaSyBXvktTg4Mb7yGlR1CD_oh1Pg58H9wpeLI'
 YOUTUBE_API_SERVICE_NAME = 'youtube'
 YOUTUBE_API_VERSION = 'v3'
 
-MAX_COMMENTS = 50
+MAX_COMMENTS = 100
 
 def get_youtube_client():
     return build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, developerKey=API_KEY, cache_discovery=False)
@@ -25,7 +25,6 @@ def extract_video_id(url):
         return url.split('shorts/', 1)[1]
     else:
         return None
-    
     
 def get_comments_with_sentiment(video_id):
     youtube = get_youtube_client()
@@ -73,12 +72,31 @@ def save_to_json(comments):
     with open(filepath, "w", encoding="utf-8") as f:
         json.dump(comments, f, ensure_ascii=False, indent=2)
 
+def get_video_title(video_id):
+    youtube = get_youtube_client()
+
+    request = youtube.videos().list(
+        part="snippet",
+        id=video_id
+    )
+    response = request.execute()
+
+    if "items" in response and len(response["items"]) > 0:
+        return response["items"][0]["snippet"]["title"]
+    return "Unknown Title"
+
 def run(url):
     video_id = extract_video_id(url)
 
     if video_id:
         comments = get_comments_with_sentiment(video_id)
-        save_to_json(comments)
 
-url = "https://www.youtube.com/watch?v=X1-YzIuMUlU"
-run(url)
+        if comments:
+            save_to_json(comments)
+            title = get_video_title(video_id)
+            return {'title': title, 'comments': comments}
+        else:
+            return None
+    else:
+        print("Failed to extract video id, please, check url correctness.")
+        return None
