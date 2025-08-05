@@ -9,7 +9,7 @@ API_KEY = 'AIzaSyBXvktTg4Mb7yGlR1CD_oh1Pg58H9wpeLI'
 YOUTUBE_API_SERVICE_NAME = 'youtube'
 YOUTUBE_API_VERSION = 'v3'
 
-MAX_COMMENTS = 100
+MAX_COMMENTS = 2000
 
 def get_youtube_client():
     return build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, developerKey=API_KEY, cache_discovery=False)
@@ -68,7 +68,17 @@ def get_comments_with_sentiment(video_id):
         return None
 
 def save_to_json(comments):
-    filepath = os.path.join("backend\data", "comments.json")
+    # Получаем абсолютный путь к текущему файлу (youtube_parser.py)
+    base_dir = os.path.dirname(__file__)
+    
+    # Строим путь к папке data и файлу comments.json
+    data_dir = os.path.join(base_dir, "data")
+    filepath = os.path.join(data_dir, "comments.json")
+
+    # Создаём папку, если её нет
+    os.makedirs(data_dir, exist_ok=True)
+
+    # Сохраняем комментарии в JSON
     with open(filepath, "w", encoding="utf-8") as f:
         json.dump(comments, f, ensure_ascii=False, indent=2)
 
