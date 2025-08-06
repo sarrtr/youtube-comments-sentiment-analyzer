@@ -1,38 +1,17 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const HomePage = () => {
-  const [url, setUrl] = useState('');
+  const [url, setUrl] = useState("");
   const navigate = useNavigate();
 
-  const handleKeyDown = async (event) => {
-    if (event.key === 'Enter') {
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
       event.preventDefault();
 
-      if (url.trim() !== '') {
-        try {
-          const response = await axios.get(`http://localhost:8000/analyze/`, {
-            params: { url }
-          });
-
-          console.log('Ответ от сервера:', response.data);
-
-          if (response.data.success) {
-            navigate('/charts', {
-              state: {
-              comments: response.data.comments,
-              title: response.data.title 
-              }
-            });
-          } else {
-            navigate('/error');
-          }
-
-        } catch (error) {
-          console.error('Ошибка при анализе:', error);
-          navigate('/error');
-        }
+      if (url.trim() !== "") {
+        navigate("/loading", { state: { videoUrl: url } });
       }
     }
   };
@@ -40,7 +19,11 @@ const HomePage = () => {
   return (
     <div className="flex flex-col items-start min-h-screen bg-white text-black px-16 pt-16">
       <h1 className="text-left text-8xl font-inter font-light leading-tight">
-        Анализ тональности<br />комментариев<br />под YouTube-видео
+        Анализ тональности
+        <br />
+        комментариев
+        <br />
+        под YouTube-видео
       </h1>
 
       <input
