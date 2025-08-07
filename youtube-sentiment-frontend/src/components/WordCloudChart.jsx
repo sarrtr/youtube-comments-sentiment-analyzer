@@ -1,20 +1,13 @@
 import React from "react";
-import ReactWordcloud from "react-wordcloud";
+
+const getRandomInt = (min, max) =>
+  Math.floor(Math.random() * (max - min + 1)) + min;
 
 const WordCloudChart = ({ words, title }) => {
-  const options = {
-    rotations: 2,
-    rotationAngles: [-90, 0],
-    fontSizes: [12, 36],
-  };
-
-  if (!Array.isArray(words)) {
-  console.warn("words не массив:", words);
-}
-   console.log("Words массив:", words); 
-
   const safeWords = Array.isArray(words)
-    ? words.filter(word => word && typeof word.text === 'string' && typeof word.value === 'number')
+    ? words.filter(
+        (word) => word && typeof word.text === "string" && typeof word.value === "number"
+      )
     : [];
 
   if (safeWords.length === 0) {
@@ -29,8 +22,31 @@ const WordCloudChart = ({ words, title }) => {
   return (
     <div className="h-full w-full">
       <h3 className="text-center font-semibold mb-2">{title}</h3>
-      <div style={{ height: "200px", width: "100%" }}>
-        <ReactWordcloud words={safeWords} options={options} />
+      <div className="relative w-full h-[200px] overflow-hidden">
+        {safeWords.map((word, index) => {
+          const fontSize = 10 + (word.value / safeWords[0].value) * 12;
+          const x = getRandomInt(10, 90);
+          const y = getRandomInt(10, 90);
+          const rotation = getRandomInt(-45, 45);
+
+          return (
+            <span
+              key={index}
+              className="absolute  animate-fadeIn"
+              style={{
+                left: `${x}%`,
+                top: `${y}%`,
+                fontSize: `${fontSize}px`,
+                transform: `translate(-50%, -50%) rotate(${rotation}deg)`,
+                whiteSpace: "nowrap",
+                fontWeight: 500,
+                color: "#333",
+              }}
+            >
+              {word.text}
+            </span>
+          );
+        })}
       </div>
     </div>
   );

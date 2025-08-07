@@ -122,7 +122,7 @@ export function getWordFrequencies(comments) {
       .map(([text, value]) => ({ text, value }))
       .filter((item) => typeof item.value === "number" && !isNaN(item.value))
       .sort((a, b) => b.value - a.value)
-      .slice(0, 50);
+      .slice(0, 10);
 
   console.log("Частоты слов:", frequencies);
 
