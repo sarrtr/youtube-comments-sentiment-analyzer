@@ -1,5 +1,13 @@
 import React from "react";
-import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from "recharts";
+import {
+  BarChart,
+  Bar,
+  Cell,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  ResponsiveContainer,
+} from "recharts";
 
 const COLORS = ["#59FF00", "#FF0090", "#00BFFF"];
 
@@ -22,14 +30,14 @@ const TriangleBar = (props) => {
 
 export default function CustomBarChart({ commentsCount }) {
   const data = [
-    { name: "Positive", value: commentsCount.positive },
-    { name: "Negative", value: parseInt(commentsCount.negative) },
-    { name: "Neutral", value: parseInt(commentsCount.neutral) },
+    { name: "Позитивные", value: commentsCount.positive },
+    { name: "Негативные", value: parseInt(commentsCount.negative) },
+    { name: "Нейтральные", value: parseInt(commentsCount.neutral) },
   ];
 
   return (
     <div style={{ width: "100%", height: "100%" }}>
-      <ResponsiveContainer>
+      <ResponsiveContainer width="100%" height="100%">
         <BarChart
           data={data}
           margin={{

@@ -24,6 +24,15 @@ const ChartsPage = () => {
     [comments]
   );
 
+  const sentimentMap = {
+    positive: "позитивная",
+    neutral: "нейтральная",
+    negative: "негативная",
+  };
+
+  const dominantSentimentRu =
+    sentimentMap[dominantSentiment] || "Не определено";
+
   return (
     <div className="flex flex-col h-screen w-screen bg-white text-black px-16 pt-16 pb-8 overflow-hidden">
       <h1 className="text-4xl font-bold mb-4">{title}</h1>
@@ -31,16 +40,14 @@ const ChartsPage = () => {
       <div className="mt-8 flex flex-row gap-6 flex-grow overflow-hidden">
         {/*first column*/}
         <div className="w-1/3 flex flex-col gap-4">
-          
-          <div className="h-1/3 flex-grow">
-            <h2 className=" text-lg font-semibold">
-            Проанализировано комментариев: {comments.length}
-          </h2>
+          <div className="h-1/3 flex-grow flex flex-col justify-center space-y-4 ml-9">
+            <h2 className="text-xl font-semibold">
+              Проанализировано комментариев: {comments.length}
+            </h2>
 
-          <h2 className="text-lg font-semibold">Превалирующая тональность:</h2>
-          <p className="text-xl capitalize font-semibold">
-            {dominantSentiment}
-          </p>
+            <h2 className="text-xl font-semibold">
+              Превалирующая тональность: {dominantSentimentRu}
+            </h2>
           </div>
 
           <div className="h-2/3 flex-grow">
@@ -59,20 +66,20 @@ const ChartsPage = () => {
         </div>
 
         {/*third column*/}
-        <div className="w-1/3 flex flex-col gap-4 overflow-hidden">
-          <div className="h-1/3">
+        <div className="w-1/3 flex flex-col gap-16 justify-center overflow-hidden">
+          <div className="h-1/3 justify-center">
             <WordCloudChart
               words={wordFrequencies.positive}
               title="Позитивные"
             />
           </div>
-          <div className="h-1/3">
+          <div className="h-1/3 justify-center">
             <WordCloudChart
               words={wordFrequencies.neutral}
               title="Нейтральные"
             />
           </div>
-          <div className="h-1/3">
+          <div className="h-1/3 justify-center">
             <WordCloudChart
               words={wordFrequencies.negative}
               title="Негативные"

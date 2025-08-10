@@ -1,6 +1,6 @@
 import { parseISO, differenceInDays, addDays, format } from "date-fns";
 
-export function analyzeComments(comments, intervalCount = 20) {
+export function analyzeComments(comments, intervalCount = 5) {
   const counts = { positive: 0, neutral: 0, negative: 0 };
   comments.forEach((c) => {
     if (counts[c.sentiment] !== undefined) counts[c.sentiment]++;

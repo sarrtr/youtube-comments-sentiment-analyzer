@@ -1,55 +1,34 @@
 import React from "react";
 
-const getRandomInt = (min, max) =>
-  Math.floor(Math.random() * (max - min + 1)) + min;
+export default function WordCloudChart({ words, title }) {
+  const colorPalettes = {
+    positive: ["#59FF00", "#4BD501", "#53C914", "#94FF5A", "#71E732"],
+    negative: ["#FBCFE8", "#F9A8D4", "#F472B6", "#EC4899", "#DB2777"],
+    neutral: ["#00BFFF", "#099ACB", "#5DD7FF", "#5AC3E6", "#95E5FF"],
+  };
 
-const WordCloudChart = ({ words, title }) => {
-  const safeWords = Array.isArray(words)
-    ? words.filter(
-        (word) => word && typeof word.text === "string" && typeof word.value === "number"
-      )
-    : [];
+  const paletteMap = {
+    Позитивные: "positive",
+    Нейтральные: "neutral",
+    Негативные: "negative",
+  };
 
-  if (safeWords.length === 0) {
-    return (
-      <div className="p-4 border rounded text-center text-gray-500 text-sm">
-        <h3 className="font-semibold mb-2">{title}</h3>
-        Нет данных для отображения
-      </div>
-    );
-  }
+  const palette = colorPalettes[paletteMap[title]];
 
   return (
-    <div className="h-full w-full">
-      <h3 className="text-center font-semibold mb-2">{title}</h3>
-      <div className="relative w-full h-[200px] overflow-hidden">
-        {safeWords.map((word, index) => {
-          const fontSize = 10 + (word.value / safeWords[0].value) * 12;
-          const x = getRandomInt(10, 90);
-          const y = getRandomInt(10, 90);
-          const rotation = getRandomInt(-45, 45);
-
-          return (
-            <span
-              key={index}
-              className="absolute  animate-fadeIn"
-              style={{
-                left: `${x}%`,
-                top: `${y}%`,
-                fontSize: `${fontSize}px`,
-                transform: `translate(-50%, -50%) rotate(${rotation}deg)`,
-                whiteSpace: "nowrap",
-                fontWeight: 500,
-                color: "#333",
-              }}
-            >
-              {word.text}
-            </span>
-          );
-        })}
-      </div>
+    <div className="flex flex-wrap gap-3 p-4 bg-white rounded-lg shadow">
+      {words.map((word, index) => {
+        const bgColor = palette[Math.floor(Math.random() * 5)];
+        return (
+          <span
+            key={index}
+            className="px-4 py-2 text-sm font-medium rounded-full text-white whitespace-nowrap shadow-sm"
+            style={{ backgroundColor: bgColor }}
+          >
+            {word.text}
+          </span>
+        );
+      })}
     </div>
   );
-};
-
-export default WordCloudChart;
+}
