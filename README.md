@@ -1,4 +1,4 @@
-# YouTube Comments Sentiment Analyzer 
+# YouTube Comments Sentiment Analyzer in Russian
 ## Project overview
 
 This project analyzes YouTube video comments in Russian and visualizes their sentiment via different charts.
