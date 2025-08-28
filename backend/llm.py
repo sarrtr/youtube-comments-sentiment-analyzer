@@ -4,9 +4,6 @@ import torch.nn.functional as F
 import re
 from emoji import replace_emoji
 
-# tokenizer = AutoTokenizer.from_pretrained("seara/rubert-base-cased-russian-sentiment")
-# model = AutoModelForSequenceClassification.from_pretrained("seara/rubert-base-cased-russian-sentiment")
-
 tokenizer = AutoTokenizer.from_pretrained("seara/rubert-tiny2-russian-sentiment")
 model = AutoModelForSequenceClassification.from_pretrained("seara/rubert-tiny2-russian-sentiment")
 

@@ -1,6 +1,10 @@
 import React from "react";
 
 export default function WordCloudChart({ words, title }) {
+  if (!words || !Array.isArray(words)) {
+      return <div>Нет данных для отображения</div>;
+    }
+
   const colorPalettes = {
     positive: ["#59FF00", "#4BD501", "#53C914", "#94FF5A", "#71E732"],
     negative: ["#FBCFE8", "#F9A8D4", "#F472B6", "#EC4899", "#DB2777"],
@@ -16,7 +20,7 @@ export default function WordCloudChart({ words, title }) {
   const palette = colorPalettes[paletteMap[title]];
 
   return (
-    <div className="flex flex-wrap gap-3 p-4 bg-white rounded-lg shadow">
+    <div className="flex flex-wrap gap-1 p-4 bg-white rounded-lg shadow">
       {words.map((word, index) => {
         const bgColor = palette[Math.floor(Math.random() * 5)];
         return (

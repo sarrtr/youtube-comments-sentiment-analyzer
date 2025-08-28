@@ -2,7 +2,7 @@ FROM node:20
 
 WORKDIR /app
 
-COPY frontend/ /app/
+COPY youtube-sentiment-frontend/ /app/
 
 RUN npm install
 
