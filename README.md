@@ -5,7 +5,7 @@ This project analyzes YouTube video comments in Russian and visualizes their sen
 
 ### 📌 Features
 
-- Analyze YouTube comments via embedded [LLM](https://huggingface.co/seara/rubert-tiny2-russian-sentiment).
+- Analyze YouTube comments (maximum 2 000) via embedded [LLM](https://huggingface.co/seara/rubert-tiny2-russian-sentiment).
 - Sentiment classification into positive, neutral, and negative categories.
 - Different types of charts help to analyze the comments' sentiment from different perpectives.
 - [Stop-word](https://github.com/stopwords-iso/stopwords-ru) filtering for Russian text.
@@ -33,10 +33,14 @@ docker-compose up --build
 ## 📊 How to use
 
 1. Paste the link to the Youtube video, press Enter.
-![main_page]()
+
+![main_page](https://github.com/sarrtr/youtube-comments-sentiment-analyzer/blob/main/assets/main_page.png?raw=true)
+
 2. Wait until the results are ready.
 3. Check the visualizations:
-![charts_page]()
+
+![charts_page](https://github.com/sarrtr/youtube-comments-sentiment-analyzer/blob/main/assets/charts_page.png?raw=true)
+
     - stacked-area chart shows the amount of comments of each sentiment by a certain date.
     - donut and bar charts display percentages and amount of comments of each category.
     - word cloud charts show 10 most popular words for each sentiment.
